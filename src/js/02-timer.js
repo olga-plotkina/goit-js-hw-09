@@ -1,6 +1,8 @@
 import flatpickr from 'flatpickr';
-
 import 'flatpickr/dist/flatpickr.min.css';
+
+const startBtn = document.querySelector('button[data-start]');
+startBtn.setAttribute('disabled', '');
 
 const options = {
   enableTime: true,
@@ -8,7 +10,11 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
+    if (selectedDates[0] <= new Date()) {
+      alert('Please choose a date in the future');
+    } else {
+      startBtn.removeAttribute('disabled');
+    }
   },
 };
 
