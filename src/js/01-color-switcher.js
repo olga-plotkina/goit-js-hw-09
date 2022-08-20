@@ -7,8 +7,14 @@ function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
-const onButtonChangeColorOfBody = e => {
-  document.body.style.backgroundColor = getRandomHexColor;
-};
+refs.startBtn.addEventListener('click', () => {
+  refs.startBtn.setAttribute('disabled', '');
+  const changeColorInterval = setInterval(() => {
+    document.body.style.backgroundColor = getRandomHexColor();
+  }, 1000);
 
-refs.startBtn.addEventListener('click', onButtonChangeColorOfBody);
+  refs.stopBtn.addEventListener('click', () => {
+    clearInterval(changeColorInterval);
+    refs.startBtn.removeAttribute('disabled');
+  });
+});
