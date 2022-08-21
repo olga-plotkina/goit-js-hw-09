@@ -1,6 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/dark.css';
+import Notiflix from 'notiflix';
 
 const refs = {
   startBtn: document.querySelector('button[data-start]'),
@@ -11,6 +12,7 @@ const refs = {
 };
 
 let selectedDate = 0;
+let timerId = null;
 
 refs.startBtn.setAttribute('disabled', '');
 
@@ -21,7 +23,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] <= Date.now()) {
-      alert('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future');
     } else {
       refs.startBtn.removeAttribute('disabled');
       selectedDate = selectedDates[0];
@@ -52,9 +54,14 @@ const addLeadingZero = value => {
 
 const timer = {
   start() {
-    setInterval(() => {
+    timerId = setInterval(() => {
       const currenTime = new Date();
       const deltaTime = selectedDate - currenTime;
+      if (selectedDate <= currenTime) {
+        clearInterval(timerId);
+        return;
+      }
+
       const timeComponents = convertMs(deltaTime);
 
       refs.days.textContent = addLeadingZero(timeComponents.days);
