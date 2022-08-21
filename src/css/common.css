@@ -17,6 +17,20 @@ img {
   max-width: 100%;
 }
 
+#datetime-picker {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  padding: 4px 4px;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+}
+.button {
+  font-size: 20px;
+  padding: 4px 10px;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+}
 .timer {
   display: flex;
 }
