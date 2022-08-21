@@ -1,9 +1,17 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-const startBtn = document.querySelector('button[data-start]');
-startBtn.setAttribute('disabled', '');
+const refs = {
+  startBtn: document.querySelector('button[data-start]'),
+  days: document.querySelector('span[data-days]'),
+  hours: document.querySelector('span[data-hours]'),
+  minutes: document.querySelector('span[data-minutes]'),
+  seconds: document.querySelector('span[data-seconds]'),
+};
+
 let selectedDate = 0;
+
+refs.startBtn.setAttribute('disabled', '');
 
 const options = {
   enableTime: true,
@@ -14,8 +22,9 @@ const options = {
     if (selectedDates[0] <= Date.now()) {
       alert('Please choose a date in the future');
     } else {
-      startBtn.removeAttribute('disabled');
+      refs.startBtn.removeAttribute('disabled');
       selectedDate = selectedDates[0];
+      console.log(selectedDate);
     }
   },
 };
@@ -36,13 +45,23 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
+const addLeadingZero = value => {
+  return String(value).padStart(2, '0');
+};
+
 const timer = {
   start() {
     setInterval(() => {
-      const currenTime = Date.now;
+      const currenTime = new Date();
       const deltaTime = selectedDate - currenTime;
       const timeComponents = convertMs(deltaTime);
-      console.log(timeComponents);
+
+      refs.days.textContent = addLeadingZero(timeComponents.days);
+      refs.hours.textContent = addLeadingZero(timeComponents.hours);
+      refs.minutes.textContent = addLeadingZero(timeComponents.minutes);
+      refs.seconds.textContent = addLeadingZero(timeComponents.seconds);
     }, 1000);
   },
 };
+
+refs.startBtn.addEventListener('click', timer.start.bind(timer));
