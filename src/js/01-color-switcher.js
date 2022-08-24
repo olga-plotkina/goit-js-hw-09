@@ -8,12 +8,14 @@ function getRandomHexColor() {
 }
 
 refs.startBtn.addEventListener('click', () => {
-  refs.startBtn.setAttribute('disabled', '');
+  refs.startBtn.disabled = true;
+  refs.stopBtn.disabled = false;
   const changeColorInterval = setInterval(() => {
     document.body.style.backgroundColor = getRandomHexColor();
   }, 1000);
 
   refs.stopBtn.addEventListener('click', () => {
+    refs.stopBtn.disabled = true;
     clearInterval(changeColorInterval);
     refs.startBtn.removeAttribute('disabled');
   });
